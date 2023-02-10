@@ -1,16 +1,9 @@
-In one of the OOP based languages, make a program where it is possible:
-   * User can enter, view or edit information about any of the PC parts. Each part has three attributes - type, model and price. 
-   When entering or editing information, _all_ attributes have to be filled in with information. Examples of PC parts are given in the table.
-   Each attribute's value, ex. "Corsair Vengeance LPX 16GB" or "RAM" has to be kept _separately_. (ex. it is not allowed to have "RAM Corsair Vengeance LPX 16GB" as one value.)
-
-   * Programm control is happening using GUI.
-
-   * Information about PC parts is possible to be saved in a text file in this format:
-   
-   -PC Part-
-   Type: RAM
-   Model: Corsair Vengeance LPX 16GB
-   Price: 99,99 EUR
-   
-
-   use language writing ethics nerd
+5. uzdevums (15 punkti) Vienā no objektorientētajām programmēšanas valodām izveido programmu, kurā:
+• Lietotājs var ievadīt, apskatīt un labot informāciju par kādu no personālā datora sastāvdaļām. Katrai sastāvdaļai ir trīs īpašības – veids, modelis un cena. Ievadot vai labojot informāciju, jābūt aizpildītām visu īpašību vērtībām. Personālā datora sastāvdaļu piemēri doti uzdevuma tabulā. Katras īpašības vērtībai, piemēram, “Corsair Vengeance LPX 16GB” vai “RAM”, jāglabājas atsevišķi no citām vērtībām (piemēram, nedrīkst sapludināt vienā īpašībā “RAM Corsair Vengeance LPX 16GB 99,99”). (5 punkti)
+• Programmas vadība notiek, lietojot grafisko lietotāja saskarni. (3 punkti)
+• Informāciju par personālā datora sastāvdaļu ir iespējams saglabāt teksta datnē šādā formātā: (2 punkti)
+-Personālā datora sastāvdaļa-
+Veids: RAM
+Modelis: Corsair Vengeance LPX 16GB
+Cena: 99,99 EUR
+Ievēro digitāla produkta dizaina, objektorientētas programmēšanas valodas un koda rakstīšanas labās prakses pamatprincipus! (5 punkti)
