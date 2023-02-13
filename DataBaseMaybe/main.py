@@ -10,7 +10,8 @@ def create_connection(path):
         print(f"The error '{e}' occurred")
 
     return connection
-create_connection(r"C:\Users\Nika\Kir 4.0\School\12.a-Programm-sana-II\DataBaseMaybe\pythonsqlite.db")
+    
+connection = create_connection("./pythonsqlite.db")
 
 def execute_query(connection, query):
     cursor = connection.cursor()
@@ -31,3 +32,4 @@ CREATE TABLE IF NOT EXISTS users (
 );
 """
 execute_query(connection, create_users_table)
+
