@@ -1,0 +1,4 @@
+Date and Time of printing: 13.02.2023 19 : 45
+ Client name: Tina
+ Ordered text: Happy Birthday
+ Price in total: 38.483445EUR

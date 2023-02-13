@@ -3,7 +3,7 @@ Vengeance Corsair LPX 16 16GB
 99.99
 GPU
 Gigabyte GeForce GT 710 2GB
-75.5
+75
 CPU
 AMD Ryzen 7 5800 X 3,8 GHz
 657.8

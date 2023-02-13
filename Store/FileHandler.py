@@ -7,7 +7,7 @@ class FileHandler():
 
     #method for reading the data
     def Disassembler(self):
-        file1 = open("PC parts.txt","r")
+        file1 = open("./store/PC parts.txt","r")
         #making list for data
         existingParts = []
         #reading the file with the data, returning it as a list of lines
@@ -25,7 +25,7 @@ class FileHandler():
 
     #method for writing a piece of data    
     def Assembler(self, existingParts):
-        file1 = open("PC parts.txt","w")
+        file1 = open("./store/PC parts.txt","w")
         b = ""
         for x in existingParts:
             # b = b + "string" is the same thing as b += "string" (b + the next thing after it)

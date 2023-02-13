@@ -1,4 +1,5 @@
 import csv
+import os.path
 from datetime import *
 
 # Класс, в котором хранится информация о клиенте и функции
@@ -27,16 +28,24 @@ class Info:
     def Export(self, price):
         mydate = datetime.now()
         # текстовый файл (программа перепишет файл с каждой новой полученной информацией)
-        cheque = open("Cheque.txt", "w")
+        cheque = open("./wood_writer/Cheque.txt", "w")
         writing = mydate.strftime("Date and Time of printing: %d.%m.%Y %H : %M") + "\n Client name: " + self.client + "\n Ordered text: " + self.text + "\n Price in total: " + str(price) + "EUR"
         cheque.write(writing)
         # CSV файл
+        """
         with open('CSVCheque.csv', 'w') as f:
             writer = csv.writer(f)
             writer.writerow(["Date and Time of printing:", mydate])
             writer.writerow(["Client name:", self.client])
             writer.writerow(["Ordered text:", self.text])
             writer.writerow(["Price in total:", str(price) + " EUR"])
+        """
+        is_created = os.path.isfile("./wood_writer/CSVCheque.csv")
+        with open('./wood_writer/CSVCheque.csv', 'a', newline="") as f:
+            writer = csv.writer(f)
+            if not is_created:
+                writer.writerow(["Date and Time of printing","Client name","Ordered text","Price in total"])
+            writer.writerow([mydate, self.client, self.text, str(price)])
         
 # задается обьект, с помощью которого работает программа, и затем с этим обьектом она выполняет заданные функции
 woodThing = Info()

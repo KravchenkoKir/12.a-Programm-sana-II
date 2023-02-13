@@ -1,4 +1,0 @@
-Date and Time of printing: 13.02.2023 15 : 33
- Client name: Andrew
- Ordered text: Jones
- Price in total: 25.410871200000003EUR
