@@ -24,19 +24,52 @@ def execute_query(connection, query):
         print(f"The error '{e}' occurred")
 
 
-create_posts = """
+create_likes_table = """
+CREATE TABLE IF NOT EXISTS likes (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, 
+  user_id INTEGER NOT NULL, 
+  post_id integer NOT NULL, 
+  FOREIGN KEY (user_id) REFERENCES users (id) FOREIGN KEY (post_id) REFERENCES posts (id)
+);
+"""
+create_comments_table = """
+CREATE TABLE IF NOT EXISTS comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, 
+  text TEXT NOT NULL, 
+  user_id INTEGER NOT NULL, 
+  post_id INTEGER NOT NULL, 
+  FOREIGN KEY (user_id) REFERENCES users (id) FOREIGN KEY (post_id) REFERENCES posts (id)
+);
+"""
+
+
+execute_query(connection, create_comments_table)  
+execute_query(connection, create_likes_table)  
+
+create_comments = """
 INSERT INTO
-  posts (title, description, user_id)
+  comments (text, user_id, post_id)
 VALUES
-  ("Happy", "I am feeling very happy today", 1),
-  ("Hot Weather","Have you guys seen the temperature here? It's hot!", 2),
-  ("Help","I need some help with finding me dog", 2),
-  ("Great News", "I've just received a promotion! I cannot believe it!", 1),
-  ("Interesting Game", "I just had a fantastic game of tennis. Get rekt lol", 5),
-  ("Party", "Anyone up for a late-night party today?", 3);
-  """
+  ('Count me in', 1, 6),
+  ('What can I do to help?', 5 , 3),
+  ('Congrats! Happy for you buddy', 2, 4),
+  ('I was rooting for Henry though.', 4,5),
+  ('Ayyyy gz', 5, 4);
+"""
+create_likes = """
+INSERT INTO
+  likes (user_id, post_id)
+VALUES
+  (1,6),
+  (2,3),
+  (1,5),
+  (5,4),
+  (2,4),
+  (4,2),
+  (3,6);
+"""
 
-execute_query(connection, create_posts)
-
+execute_query(connection, create_comments)
+execute_query(connection, create_likes)
 
 connection.close()
