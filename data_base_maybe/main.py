@@ -23,55 +23,20 @@ def execute_query(connection, query):
     except Error as e:
         print(f"The error '{e}' occurred")
 
-create_users_table = """
-CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  age INTEGER,
-  gender TEXT,
-  nationality TEXT
-);
-"""
-create_posts_table = """
-CREATE TABLE IF NOT EXISTS posts(
-  id INTEGER PRIMARY KEY AUTOINCREMENT, 
-  title TEXT NOT NULL, 
-  description TEXT NOT NULL, 
-  user_id INTEGER NOT NULL, 
-  FOREIGN KEY (user_id) REFERENCES users (id)
-);
-"""
-create_comments_table = """
-CREATE TABLE IF NOT EXISTS comments (
-  id INTEGER PRIMARY KEY AUTOINCREMENT, 
-  text TEXT NOT NULL, 
-  user_id INTEGER NOT NULL, 
-  post_id INTEGER NOT NULL, 
-  FOREIGN KEY (user_id) REFERENCES users (id) FOREIGN KEY (post_id) REFERENCES posts (id)
-);
-"""
-create_likes_table = """
-CREATE TABLE IF NOT EXISTS likes (
-  id INTEGER PRIMARY KEY AUTOINCREMENT, 
-  user_id INTEGER NOT NULL, 
-  post_id integer NOT NULL, 
-  FOREIGN KEY (user_id) REFERENCES users (id) FOREIGN KEY (post_id) REFERENCES posts (id)
-);
-"""
 
-#create_users = """
-"""INSERT INTO
-  users (name, age, gender, nationality)
+create_posts = """
+INSERT INTO
+  posts (title, description, user_id)
 VALUES
-  ('James', 25, 'male', 'USA'),
-  ('Leila', 32, 'female', 'France'),
-  ('Brigitte', 35, 'female', 'England'),
-  ('Mike', 40, 'male', 'Denmark'),
-  ('Elizabeth', 21, 'female', 'Canada');
-"""
-#execute_query(connection, create_users)
-execute_query(connection, create_users_table)
-execute_query(connection, create_posts_table)   
+  ("Happy", "I am feeling very happy today", 1),
+  ("Hot Weather","Have you guys seen the temperature here? It's hot!", 2),
+  ("Help","I need some help with finding me dog", 2),
+  ("Great News", "I've just received a promotion! I cannot believe it!", 1),
+  ("Interesting Game", "I just had a fantastic game of tennis. Get rekt lol", 5),
+  ("Party", "Anyone up for a late-night party today?", 3);
+  """
+
+execute_query(connection, create_posts)
 
 
 connection.close()
