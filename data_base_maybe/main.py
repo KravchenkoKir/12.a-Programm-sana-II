@@ -34,16 +34,32 @@ def execute_read_query(connection, query):
   except Error as e:
     print(f"The error '{e}' has occured.")
 
-select_users = "SELECT * from users"
-users = execute_read_query(connection, select_users)
+# select is what I want to see from the program
+# select_users = "SELECT * from users"
+# users = execute_read_query(connection, select_users)
 
-select_posts = "SELECT * from posts"
-posts = execute_read_query(connection, select_posts)
+# select_posts = "SELECT * from posts"
+# posts = execute_read_query(connection, select_posts)
 
-for user in users:
-  print(user)
+# for user in users:
+#   print(user)
 
-for post in posts:
-  print(post)
+# for post in posts:
+#   print(post)
+
+select_users_posts = """
+SELECT
+  users.id,
+  users.name,
+  posts.description
+FROM
+  posts
+  INNER JOIN users ON users.id = posts.user_id
+"""
+# INNER JOIN means that it will get data that is common between the two tables
+execute_users_post = execute_read_query(connection, select_users_posts)
+
+for print_users_post in execute_users_post:
+  print(print_users_post)
 
 connection.close()
