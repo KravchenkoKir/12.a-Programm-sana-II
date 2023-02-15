@@ -34,19 +34,6 @@ def execute_read_query(connection, query):
   except Error as e:
     print(f"The error '{e}' has occured.")
 
-# select is what I want to see from the program
-# select_users = "SELECT * from users"
-# users = execute_read_query(connection, select_users)
-
-# select_posts = "SELECT * from posts"
-# posts = execute_read_query(connection, select_posts)
-
-# for user in users:
-#   print(user)
-
-# for post in posts:
-#   print(post)
-
 select_users_posts = """
 SELECT
   users.id,
