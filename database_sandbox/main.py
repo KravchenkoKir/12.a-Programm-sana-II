@@ -11,7 +11,7 @@ def create_connection(path):
 
     return connection
     
-connection = create_connection("./data_base_maybe/pythonsqlite.db")
+connection = create_connection("./data_sandbox/pythonsqlite.db")
 
 def execute_query(connection, query):
     cursor = connection.cursor()
