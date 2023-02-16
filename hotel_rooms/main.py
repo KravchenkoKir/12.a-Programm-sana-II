@@ -24,7 +24,7 @@ def execute_query(conn, query):
         print(f"The error '{e}' has occured.")
 
 #function that fetches data and returns the result.
-def execute_ready_query(conn, query):
+def execute_read_query(conn, query):
     cur = conn.cursor()
     result = None
     try:
@@ -34,42 +34,41 @@ def execute_ready_query(conn, query):
     except Error as e:
         print(f"The error '{e}' has occured.")
 
-create_caretakers_table = """
+create_caretakers = """
 CREATE TABLE IF NOT EXISTS caretakers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     age INTEGER,
-    gender TEXT,
-    room_id INTEGER NOT NULL,
-    FOREIGN KEY (room_id) REFERENCES hotelRooms (id)
+    gender TEXT
 );
 """
 
-create_tenants_table = """
-CREATE TABLE IF NOT EXISTS tenants (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    age INTEGER,
-    gender TEXT,
-    room_id INTEGER NOT NULL,
-    FOREIGN KEY (room_id) REFERENCES hotelRooms (id)
-);
-"""
-
-create_hotelRooms_table = """
-CREATE TABLE IF NOT EXISTS hotelRooms (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    beds INTEGER,
-    bathrooms INTEGER,
-    caretakers_id INTEGER NOT NULL,
-    tenant_id INTEGER NOT NULL,
-    FOREIGN KEY (caretakers_id) REFERENCES caretakers (id) FOREIGN KEY (tenant_id) REFERENCES tenants (id)
-);
+create_rooms = """
+INSERT INTO
+    hotelRooms (beds, bathrooms, caretakers_id, tenant_id)
+VALUES
+    (2,1,1,3),
+    (1,1,2,4),
+    (2,2,2,1),
+    (3,1,2,5),
+    (3,2,3,2);
 """
 
 
-execute_query(conn, create_caretakers_table)
-execute_query(conn, create_tenants_table)
-execute_query(conn, create_hotelRooms_table)
+create_tenants = """
+INSERT INTO
+    tenants (name, age, gender, room_id) 
+VALUES
+    ("Ashley Baker", 26, "Female", 3),
+    ("Jonathan Friwo", 22, "Male", 5),
+    ("Max N. Tenala", 17, "Non-binary", 1),
+    ("Robert Dennir", 43, "Male", 2),
+    ("Lynda Weyen", 35, "Female", 4)
+"""
+
+
+execute_query(conn,create_caretakers)
+execute_query(conn, create_rooms)
+execute_query(conn, create_tenants)
 
 conn.close()
