@@ -14,7 +14,7 @@ class FileHandler():
 
     #method for reading the data
     def Disassembler(self):
-        file1 = open("./ArtStore/Supplies.txt","r")
+        file1 = open("./store_prototype_txt_ver/Supplies.txt","r")
         #making list for data
         existingParts = []
         #reading the file with the data, returning it as a list of lines
@@ -32,7 +32,7 @@ class FileHandler():
 
     #method for writing a piece of data    
     def Assembler(self, existingParts):
-        file1 = open("./ArtStore/Supplies.txt","w")
+        file1 = open("./store_prototype_txt_ver/Supplies.txt","w")
         b = ""
         for x in existingParts:
             # b = b + "string" is the same thing as b += "string" (b + the next thing after it)
@@ -41,7 +41,7 @@ class FileHandler():
     
     #method for exporting data into an outside file
     def Export(self, existingPart):
-        cheque = open("./ArtStore/Cheque.txt", "w")
+        cheque = open("./store_prototype_txt_ver/Cheque.txt", "w")
         text = "- ArtStore - \n Information: " + existingPart.type + "\n Item: " + existingPart.model + "\n Price:" + str(existingPart.price) + " EUR"
         cheque.write(text)
 
