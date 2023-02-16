@@ -35,40 +35,13 @@ def execute_read_query(conn, query):
         print(f"The error '{e}' has occured.")
 
 create_caretakers = """
-CREATE TABLE IF NOT EXISTS caretakers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    age INTEGER,
-    gender TEXT
-);
-"""
-
-create_rooms = """
-INSERT INTO
-    hotelRooms (beds, bathrooms, caretakers_id, tenant_id)
+INSERT INTO 
+    caretakers (name, age, gender)
 VALUES
-    (2,1,1,3),
-    (1,1,2,4),
-    (2,2,2,1),
-    (3,1,2,5),
-    (3,2,3,2);
+    ("John Klaus", 60, "Male"),
+    ("Robert Frost", 23, "Male"),
+    ("Melandra Viven", 35, "Female")
 """
-
-
-create_tenants = """
-INSERT INTO
-    tenants (name, age, gender, room_id) 
-VALUES
-    ("Ashley Baker", 26, "Female", 3),
-    ("Jonathan Friwo", 22, "Male", 5),
-    ("Max N. Tenala", 17, "Non-binary", 1),
-    ("Robert Dennir", 43, "Male", 2),
-    ("Lynda Weyen", 35, "Female", 4)
-"""
-
-
-execute_query(conn,create_caretakers)
-execute_query(conn, create_rooms)
-execute_query(conn, create_tenants)
+execute_query(conn, create_caretakers)
 
 conn.close()
