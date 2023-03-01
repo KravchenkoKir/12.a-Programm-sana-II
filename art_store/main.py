@@ -86,19 +86,27 @@ def DataExtraction():
     modelEntry.insert(0, curPart.model)
     priceEntry.insert(0, curPart.price)
 
-yes_no = IntVar()
-addItem = Checkbutton(m, text="Add as new part", variable = yes_no)
-
+addOrUpdate = IntVar()
+addItem = Radiobutton(m, text="Add New Item", variable = addOrUpdate, value=2)
+updateItem = Radiobutton(m, text="Update Current Item", variable= addOrUpdate, value=1)
+"""
+#Error popup if nothing is chosen
+def open_popup():
+   top= Toplevel(m)
+   top.geometry("750x250")
+   top.title("Error")
+   Label(top, text= "Please select an item.").place(x=150,y=80)
+"""
 #Commands for buttons responsible for either updating or adding new items
 def DataUpdate():
-    if yes_no.get() == 0 :
+    if addOrUpdate.get() == 1 :
         dataIndex = Listbox.curselection()[0]
         existingParts[dataIndex].type = typeEntry.get()
         existingParts[dataIndex].model = modelEntry.get()
         existingParts[dataIndex].price = priceEntry.get()
         fileHandler.Assembler(existingParts)
         namesofParts()
-    elif yes_no.get() == 1:
+    elif addOrUpdate.get() == 2:
         newPart = Part(typeEntry.get(), modelEntry.get(), priceEntry.get())
         existingParts.append(newPart)
         fileHandler.Assembler(existingParts)
@@ -108,6 +116,7 @@ def DataUpdate():
 def CreateCheque():
     fileHandler.Export(existingParts[Listbox.curselection()[0]])
 
+#Buttons
 showButton = Button(m, text = "Show", command=DataExtraction)
 updateButton = Button(m, text="Update", command=DataUpdate)
 exportButton = Button(m,text="Export", command=CreateCheque)
@@ -127,10 +136,11 @@ priceLabel.grid(row=6, column=0)
 priceEntry.grid(row=7, column=0, ipadx=50)
 
 addItem.grid(row=8, column=0)
+updateItem.grid(row=9, column=0)
 
-showButton.grid(row=9, column=0, ipadx=20)
-updateButton.grid(row=10, column=0, ipadx=15)
-exportButton.grid(row=11, column=0, ipadx=17)
+showButton.grid(row=10, column=0, ipadx=20)
+updateButton.grid(row=11, column=0, ipadx=15)
+exportButton.grid(row=12, column=0, ipadx=17)
 
 
 m.mainloop()
