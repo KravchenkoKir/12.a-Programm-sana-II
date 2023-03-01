@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+import tkinter
 
 def create_connection(path):
     connection = None
@@ -34,14 +35,12 @@ def execute_read_query(conn, query):
     except Error as e:
         print(f"The error '{e}' has occured.")
 
-create_caretakers = """
-INSERT INTO 
-    caretakers (name, age, gender)
-VALUES
-    ("John Klaus", 60, "Male"),
-    ("Robert Frost", 23, "Male"),
-    ("Melandra Viven", 35, "Female")
-"""
-execute_query(conn, create_caretakers)
+#GUI
+m = tkinter.Tk() #m = main window
 
+
+
+
+
+m.mainloop()
 conn.close()
