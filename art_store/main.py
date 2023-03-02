@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 #class consisting template for art models
 class Part:
@@ -56,15 +57,19 @@ m.title('Art Store Storage')
 
 Label1 = Label(m, text="Choose an object or make a new one to work with.")
 
-Listbox = Listbox(m)
+itemListbox = Listbox(m)
 
 #method for entering the names of parts into the listbox
 def namesofParts():
-    Listbox.delete(0, END)
+    itemListbox.delete(0, END)
     for curPart in range(len(existingParts)):
-        Listbox.insert (curPart, existingParts[curPart].model)
+        itemListbox.insert (curPart, existingParts[curPart].model)
 
 namesofParts()
+
+#Error popup if nothing is chosen
+def error():
+   messagebox.showerror('Python Error', 'Error: Please select an item!')
 
 #creating objects
 
@@ -77,44 +82,52 @@ modelEntry = Entry(m)
 priceEntry = Entry(m)
 
 def DataExtraction():
-    dataIndex = Listbox.curselection()[0]
-    curPart = existingParts[dataIndex]
-    typeEntry.delete(first=0, last=len(typeEntry.get()))
-    modelEntry.delete(first=0, last=len(modelEntry.get()))
-    priceEntry.delete(first=0, last=len(priceEntry.get()))
-    typeEntry.insert(0, curPart.type)
-    modelEntry.insert(0, curPart.model)
-    priceEntry.insert(0, curPart.price)
+    try:
+        dataIndex = itemListbox.curselection()[0]
+        curPart = existingParts[dataIndex]
+        typeEntry.delete(first=0, last=len(typeEntry.get()))
+        modelEntry.delete(first=0, last=len(modelEntry.get()))
+        priceEntry.delete(first=0, last=len(priceEntry.get()))
+        typeEntry.insert(0, curPart.type)
+        modelEntry.insert(0, curPart.model)
+        priceEntry.insert(0, curPart.price)
+    except:
+        error()
 
 addOrUpdate = IntVar()
+addOrUpdate.set(1)
 addItem = Radiobutton(m, text="Add New Item", variable = addOrUpdate, value=2)
 updateItem = Radiobutton(m, text="Update Current Item", variable= addOrUpdate, value=1)
-"""
-#Error popup if nothing is chosen
-def open_popup():
-   top= Toplevel(m)
-   top.geometry("750x250")
-   top.title("Error")
-   Label(top, text= "Please select an item.").place(x=150,y=80)
-"""
+addInstruction = Label(m, text="To make a new item, use 'Add New Item' option.",justify=LEFT)
+updateInstruction = Label(m,text="To edit information, use 'Update Current Item' option.", justify=LEFT)
+
 #Commands for buttons responsible for either updating or adding new items
 def DataUpdate():
     if addOrUpdate.get() == 1 :
-        dataIndex = Listbox.curselection()[0]
-        existingParts[dataIndex].type = typeEntry.get()
-        existingParts[dataIndex].model = modelEntry.get()
-        existingParts[dataIndex].price = priceEntry.get()
-        fileHandler.Assembler(existingParts)
-        namesofParts()
+        try:
+            dataIndex = itemListbox.curselection()[0]
+            existingParts[dataIndex].type = typeEntry.get()
+            existingParts[dataIndex].model = modelEntry.get()
+            existingParts[dataIndex].price = priceEntry.get()
+            fileHandler.Assembler(existingParts)
+            namesofParts()
+        except:
+            error()
     elif addOrUpdate.get() == 2:
-        newPart = Part(typeEntry.get(), modelEntry.get(), priceEntry.get())
-        existingParts.append(newPart)
-        fileHandler.Assembler(existingParts)
-        namesofParts()
+        try:
+            newPart = Part(typeEntry.get(), modelEntry.get(), priceEntry.get())
+            existingParts.append(newPart)
+            fileHandler.Assembler(existingParts)
+            namesofParts()
+        except:
+            error()
 
 #Method for exporting
 def CreateCheque():
-    fileHandler.Export(existingParts[Listbox.curselection()[0]])
+    try:
+        fileHandler.Export(existingParts[itemListbox.curselection()[0]])
+    except:
+        error()
 
 #Buttons
 showButton = Button(m, text = "Show", command=DataExtraction)
@@ -124,7 +137,7 @@ exportButton = Button(m,text="Export", command=CreateCheque)
 
 #Gridding
 Label1.grid(row=0, column=0)
-Listbox.grid(row = 1, column = 0, ipadx = 30)
+itemListbox.grid(row = 1, column = 0, ipadx = 30)
 
 typeLabel.grid(row=2, column=0)
 typeEntry.grid(row=3, column=0, ipadx=50)
@@ -135,12 +148,15 @@ modelEntry.grid(row=5, column=0, ipadx=50)
 priceLabel.grid(row=6, column=0)
 priceEntry.grid(row=7, column=0, ipadx=50)
 
-addItem.grid(row=8, column=0)
-updateItem.grid(row=9, column=0)
 
-showButton.grid(row=10, column=0, ipadx=20)
-updateButton.grid(row=11, column=0, ipadx=15)
-exportButton.grid(row=12, column=0, ipadx=17)
+addInstruction.grid(row=8, column=0)
+updateInstruction.grid(row=9, column=0)
+addItem.grid(row=10, column=0, ipady=5)
+updateItem.grid(row=11, column=0, ipady=5)
+
+showButton.grid(row=12, column=0, ipadx=20, ipady= 5)
+updateButton.grid(row=13, column=0, ipadx=15, ipady=5)
+exportButton.grid(row=14, column=0, ipadx=17, ipady=5)
 
 
 m.mainloop()
