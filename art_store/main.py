@@ -1,54 +1,54 @@
 from tkinter import *
 from tkinter import messagebox
 
-#class consisting template for art models
-class Part:
-    def __init__(self, type, model, price):
-        self.type = type
-        self.model = model
-        self.price = price
+#klase, kurā tiek saglabātā informācija par produktu
+class Dala:
+    def __init__(self, tips, modelis, cena):
+        self.tips = tips
+        self.modelis = modelis
+        self.cena = cena
 
-#Class that will handle reading the file and extracting the information from it.
+#Klase, kura lasa un maina informāciju tekstā failā.
 class FileHandler():
     def __init__(self):
-        self.Parts = []
+        self.Dalas = []
 
-    #method for reading the data
-    def Disassembler(self):
-        file1 = open("./art_store/Supplies.txt","r")
+    #Metode lai progrāma lasa informāciju un izveido daļas no katram trijam daļam
+    def Dekonstruktors(self):
+        dokuments = open("./art_store/Noliktāva.txt","r")
         #making list for data
-        existingParts = []
+        eksistejosasDalas = []
         #reading the file with the data, returning it as a list of lines
-        returnedText = file1.readlines() 
+        uzrakstitaisTeksts = dokuments.readlines() 
         # Splitting the list into parts consisting 3 pieces each
-        for y in range(0, len(returnedText)-1,3):  
-            list_type = returnedText[y].strip()
-            list_model = returnedText[y+1].strip()
-            list_price = float(returnedText[y+2].strip())
+        for y in range(0, len(uzrakstitaisTeksts)-1,3):  
+            list_tips = uzrakstitaisTeksts[y].strip()
+            list_modelis = uzrakstitaisTeksts[y+1].strip()
+            list_cena = float(uzrakstitaisTeksts[y+2].strip())
             #adding the piece of the read data into the list made for it
-            existingParts.append(Part(list_type, list_model, list_price))
-        file1.close()
-        return existingParts
+            eksistejosasDalas.append(Dala(list_tips, list_modelis, list_cena))
+        dokuments.close()
+        return eksistejosasDalas
 
 
     #method for writing a piece of data    
-    def Assembler(self, existingParts):
-        file1 = open("./art_store/Supplies.txt","w")
+    def Assembler(self, eksistejosasDalas):
+        file1 = open("./art_store/Noliktāva.txt","w")
         b = ""
-        for x in existingParts:
+        for x in eksistejosasDalas:
             # b = b + "string" is the same thing as b += "string" (b + the next thing after it)
-            b += x.type + "\n" + x.model + "\n" + str(x.price) + "\n"
+            b += x.tips + "\n" + x.modelis + "\n" + str(x.cena) + "\n"
         file1.write(b)
     
     #method for exporting data into an outside file
-    def Export(self, existingPart):
-        cheque = open("./art_store/Cheque.txt", "w")
-        text = "- ArtStore - \n Information: " + existingPart.type + "\n Item: " + existingPart.model + "\n Price:" + str(existingPart.price) + " EUR"
-        cheque.write(text)
+    def Export(self, eksistejosasDala):
+        ceks = open("./art_store/Čeks.txt", "w")
+        text = "- ArtStore - \n Informācija: " + eksistejosasDala.tips + "\n Priekšmets: " + eksistejosasDala.modelis + "\n Cena:" + str(eksistejosasDala.cena) + " EUR"
+        ceks.write(text)
 
 fileHandler = FileHandler()
 
-existingParts = fileHandler.Disassembler()
+eksistejosasDalas = fileHandler.Dekonstruktors()
 
 
 m = Tk()
@@ -62,8 +62,8 @@ itemListbox = Listbox(m)
 #method for entering the names of parts into the listbox
 def namesofParts():
     itemListbox.delete(0, END)
-    for curPart in range(len(existingParts)):
-        itemListbox.insert (curPart, existingParts[curPart].model)
+    for curPart in range(len(eksistejosasDalas)):
+        itemListbox.insert (curPart, eksistejosasDalas[curPart].modelis)
 
 namesofParts()
 
@@ -75,7 +75,7 @@ def error():
 
 typeLabel = Label(m, text="Additional Information:", justify=LEFT)
 modelLabel = Label(m, text="Item:", justify=LEFT)
-priceLabel = Label(m, text="Price (EUR):", justify=LEFT)
+priceLabel = Label(m, text="Cena (EUR):", justify=LEFT)
 
 typeEntry = Entry(m)
 modelEntry = Entry(m)
@@ -84,13 +84,13 @@ priceEntry = Entry(m)
 def DataExtraction():
     try:
         dataIndex = itemListbox.curselection()[0]
-        curPart = existingParts[dataIndex]
+        curPart = eksistejosasDalas[dataIndex]
         typeEntry.delete(first=0, last=len(typeEntry.get()))
         modelEntry.delete(first=0, last=len(modelEntry.get()))
         priceEntry.delete(first=0, last=len(priceEntry.get()))
-        typeEntry.insert(0, curPart.type)
-        modelEntry.insert(0, curPart.model)
-        priceEntry.insert(0, curPart.price)
+        typeEntry.insert(0, curPart.tips)
+        modelEntry.insert(0, curPart.modelis)
+        priceEntry.insert(0, curPart.cena)
     except:
         error()
 
@@ -106,18 +106,18 @@ def DataUpdate():
     if addOrUpdate.get() == 1 :
         try:
             dataIndex = itemListbox.curselection()[0]
-            existingParts[dataIndex].type = typeEntry.get()
-            existingParts[dataIndex].model = modelEntry.get()
-            existingParts[dataIndex].price = priceEntry.get()
-            fileHandler.Assembler(existingParts)
+            eksistejosasDalas[dataIndex].tips = typeEntry.get()
+            eksistejosasDalas[dataIndex].modelis = modelEntry.get()
+            eksistejosasDalas[dataIndex].cena = priceEntry.get()
+            fileHandler.Assembler(eksistejosasDalas)
             namesofParts()
         except:
             error()
     elif addOrUpdate.get() == 2:
         try:
-            newPart = Part(typeEntry.get(), modelEntry.get(), priceEntry.get())
-            existingParts.append(newPart)
-            fileHandler.Assembler(existingParts)
+            newPart = Dala(typeEntry.get(), modelEntry.get(), priceEntry.get())
+            eksistejosasDalas.append(newPart)
+            fileHandler.Assembler(eksistejosasDalas)
             namesofParts()
         except:
             error()
@@ -125,7 +125,7 @@ def DataUpdate():
 #Method for exporting
 def CreateCheque():
     try:
-        fileHandler.Export(existingParts[itemListbox.curselection()[0]])
+        fileHandler.Export(eksistejosasDalas[itemListbox.curselection()[0]])
     except:
         error()
 
