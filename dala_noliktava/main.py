@@ -20,7 +20,7 @@ class Datubaze:
     #" Insert" ir metode lai pievienot jaunu informaciju
     def insert(self, dala, klients, veikals, cena):
         self.cur.execute("INSERT INTO dalas VALUES (NULL, ?, ?, ?, ?)",
-                         (dala, klients, veikals, cena))
+                        (dala, klients, veikals, cena))
         self.conn.commit()
     
     # "Remove" ir metode lai noņemt informaciju
