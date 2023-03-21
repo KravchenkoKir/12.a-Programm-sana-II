@@ -8,7 +8,22 @@ class Datubaze:
         self.conn = sqlite3.connect(db)
         self.cur = self.conn.cursor()
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS dalas (id INTEGER PRIMARY KEY, dala text, klients text, veikals text, cena text)")
+            """CREATE TABLE IF NOT EXISTS klienti (
+                klienta_id INTEGER PRIMARY KEY, 
+                vards text, 
+                talrunis text
+                );
+                """)
+        self.conn.commit()
+        self.cur.execute(
+            """CREATE TABLE IF NOT EXISTS dalas (
+                dala_id INTEGER PRIMARY KEY, dala text, 
+                klients text, 
+                veikals text, 
+                cena text,
+                FOREIGN KEY (klients) REFERENCES klienti (klienta_id)
+                );
+                """)
         self.conn.commit()
 
     # "Fetch" ir metode lai lasīt un atrast informāciju
@@ -18,9 +33,11 @@ class Datubaze:
         return rindas
 
     #" Insert" ir metode lai pievienot jaunu informaciju
-    def insert(self, dala, klients, veikals, cena):
-        self.cur.execute("INSERT INTO dalas VALUES (NULL, ?, ?, ?, ?)",
-                        (dala, klients, veikals, cena))
+    def insert(self, dala, vards, veikals, cena, talrunis):
+        self.cur.execute("INSERT INTO dalas VALUES (NULL, ?, ?, ?)",
+                        (dala, veikals, cena))
+        self.cur.execute("INSERT INTO klienti VALUES (NULL, ?, ?)",
+                         (vards, talrunis))
         self.conn.commit()
     
     # "Remove" ir metode lai noņemt informaciju
@@ -29,16 +46,18 @@ class Datubaze:
         self.conn.commit()
 
     # "Update" ir metode lai nomainīt informāciju
-    def update(self, id, dala, klients, veikals, cena):
-        self.cur.execute("UPDATE dalas SET dala = ?, klients = ?, veikals = ?, cena = ? WHERE id = ?",
-                         (dala, klients, veikals, cena, id))
+    def update(self, id, dala, vards, talrunis, veikals, cena):
+        self.cur.execute("UPDATE dalas SET dala = ?, veikals = ?, cena = ? WHERE id = ?",
+                         (dala, veikals, cena, id))
         self.conn.commit()
+        self.cur.execute("UPDATE klienti SET vards = ?, talrunis =? WHERE id = ?",
+                         (vards, talrunis))
 
     # Metode, lai beigt darbu ar datubazei.
     def __del__(self):
         self.conn.close()
 
-db = Datubaze('./store.db')
+db = Datubaze('./test/store.db')
 
 
 # Funkcija, lai mainit datus sarakstā
